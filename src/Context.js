@@ -9,6 +9,9 @@ const URL = "http://localhost:8080/api/v1/room";
 const JwtToken = localStorage.getItem("JwtToken");
 console.log("JwtToken: " + JwtToken);
 
+const languages = navigator.languages;
+const currentLang = languages[0];
+
 class RoomProvider extends Component {
   state = {
     rooms: [],
@@ -23,7 +26,20 @@ class RoomProvider extends Component {
     minSize: 0,
     maxSize: 0,
     breakfast: false,
-    pets: false
+    pets: false,
+    locale: "en",
+    language: "en-US"
+  };
+
+  checkLangInBrowser = () => {
+    if (currentLang == "zh-CN") {
+      this.setState({ locale: "zh", language: "zh-CN" });
+      // console.log("chinese");
+    }
+    if (currentLang == "en-US") {
+      this.setState({ locale: "en", language: "en-US" });
+      // console.log("english");
+    }
   };
 
   // getDataFromSpringAPI
@@ -60,6 +76,7 @@ class RoomProvider extends Component {
 
   componentDidMount() {
     this.getDataFromApi();
+    this.checkLangInBrowser();
   }
 
   formatData(itemsArray) {
@@ -78,6 +95,18 @@ class RoomProvider extends Component {
     let tempRooms = [...this.state.rooms];
     const room = tempRooms.find(tempRoom => tempRoom.slug === slug);
     return room;
+  };
+
+  onChangeLanguage = lang => {
+    if (lang === "English") {
+      this.setState({ language: "en-US", locale: "en" });
+      // console.log("from context param langEn is: " + lang);
+    } else if (lang === "Chinese") {
+      this.setState({ language: "zh-CN", locale: "zh" });
+      // console.log("from context param langZh is: " + lang);
+    } else {
+      this.setState({ language: "en-US", locale: "en" });
+    }
   };
 
   handleChange = event => {
@@ -219,7 +248,8 @@ class RoomProvider extends Component {
           ...this.state,
           // you can keep adding more attributes
           getRoom: this.getRoom,
-          handleChange: this.handleChange
+          handleChange: this.handleChange,
+          onChangeLanguage: this.onChangeLanguage
         }}
       >
         {/* and this.props.children will let all the child node use the value of this object */}

@@ -5,6 +5,7 @@ import Services from "./Services";
 import { Link } from "react-router-dom";
 import FeaturedRooms from "./FeaturedRooms";
 import StyledBanner from "./StyledBanner";
+import { FormattedMessage } from "react-intl/lib/index";
 
 class Home extends Component {
   render() {
@@ -12,11 +13,27 @@ class Home extends Component {
       <React.Fragment>
         <Banner banner="defaultHero">
           <InnerBanner
-            title="luxurious rooms"
-            subtitle="deluxe rooms starting at $299"
+            title={
+              <FormattedMessage
+                id="InnerBanner_title"
+                defaultMessage="default translation"
+                description="Link on react page"
+              />
+            }
+            subtitle={
+              <FormattedMessage
+                id="InnerBanner_subtitle"
+                defaultMessage="default translation"
+                description="Link on react page"
+              />
+            }
           >
             <Link to="/rooms" className="btn-primary">
-              our rooms
+              <FormattedMessage
+                id="our_rooms"
+                defaultMessage="default translation"
+                description="Link on react page"
+              />
             </Link>
           </InnerBanner>
         </Banner>

@@ -3,6 +3,7 @@ import { RoomContext } from "../Context";
 import Loading from "./Loading";
 import Room from "./Room";
 import Title from "./Title";
+import { FormattedMessage } from "react-intl/lib/index";
 
 class FeaturedRooms extends Component {
   // 挂载在 class 上的 contextType 属性会被重赋值为一个由 React.createContext() 创建的 Context 对象。
@@ -19,7 +20,15 @@ class FeaturedRooms extends Component {
 
     return (
       <section className="featured-rooms">
-        <Title title="Featured rooms"></Title>
+        <Title
+          title={
+            <FormattedMessage
+              id="Featured_rooms"
+              defaultMessage="default translation"
+              description="Link on react page"
+            />
+          }
+        ></Title>
         <div className="featured-rooms-center">
           {contextObj.loading ? <Loading></Loading> : featuredRooms}
         </div>
